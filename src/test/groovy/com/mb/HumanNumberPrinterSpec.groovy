@@ -13,7 +13,7 @@ class HumanNumberPrinterSpec extends Specification {
     }
 
     @Unroll
-    def "#number should be printed as #expectedWords"(){
+    def "below ten, #number should be printed as #expectedWords"(){
 
         when:
         String actualWords = humanNumberPrinter.toWords(number)
@@ -33,8 +33,42 @@ class HumanNumberPrinterSpec extends Specification {
         7      | 'seven'
         8      | 'eight'
         9      | 'nine'
-      //  10     | 'ten'
     }
 
+    @Unroll
+    def "between ten & twelve, #number should be printed as #expectedWords"(){
+
+        when:
+        String actualWords = humanNumberPrinter.toWords(number)
+
+        then:
+        actualWords == expectedWords
+
+        where:
+        number | expectedWords
+        10      | 'ten'
+        11      | 'eleven'
+        12      | 'twelve'
+    }
+
+    @Unroll
+    def "between thirteen and nineteen, #number should be printed as #expected words"(){
+
+        when:
+        String actualWords = humanNumberPrinter.toWords(number)
+
+        then:
+        actualWords == expectedWords
+
+        where:
+        number | expectedWords
+        13      | 'thirteen'
+        14      | 'fourteen'
+        15      | 'fifteen'
+        16      | 'sixteen'
+        17      | 'seventeen'
+        18      | 'eightteen'
+        19      | 'nineteen'
+    }
 
 }
