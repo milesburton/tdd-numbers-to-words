@@ -7,29 +7,57 @@ class HumanNumberPrinter {
 
         LinkedList<String> result = new LinkedList<String>()
 
-        int tenths = number > 0 ? (number/10) : 0
-
-        if(number==0 || number < 13){
-            result.add(fetchSingularUnitAsWord(number))
+        if(hasSpecialCase(number)){
+            return fetchWordForSpecialCase(number);
         }
 
-        if(number>=13 && number < 20){
+        int tenths = number > 0 ? (number/10) : 0
 
+        if(isAnEvenModulasOfTen(number)){
+            return fetchTenthAsWord(tenths)
+        }
+
+        if(isSpokenAsSingular(number)){
+           return fetchNumberAsSingularWord(number)
+        }
+
+
+        if(isBetween13AndLessThan20(number)){
 
             String unit = fetchNumberQuantifierAsWord(tenths)
             int lsd = leastSignificantDigit(number)
 
             String word
-            if(hasPlural(lsd)){
-                word = fetchPluralUnitAsWord(lsd)
-            }else{
-                word = fetchSingularUnitAsWord(lsd)
-            }
+            word = digitAsWord(lsd)
 
-            result.add("${word}${unit}")
+            return "${word}${unit}"
         }
 
-        return result.join("")
+
+    }
+
+    private boolean isBetween13AndLessThan20(int number) {
+        number >= 13 && number < 20
+    }
+
+    boolean isSpokenAsSingular(Integer number) {
+
+        ResourceBundle bundle = ResourceBundle.getBundle("com.mb.SingularUnitAsWord")
+        return bundle.containsKey(number.toString())
+    }
+
+    private boolean isAnEvenModulasOfTen(int number) {
+        return number % 10 == 0
+    }
+
+    private String digitAsWord(int lsd) {
+        String word
+        if (hasPlural(lsd)) {
+            word = fetchPluralUnitAsWord(lsd)
+        } else {
+            word = fetchNumberAsSingularWord(lsd)
+        }
+        word
     }
 
     boolean hasPlural(int number){
@@ -38,7 +66,19 @@ class HumanNumberPrinter {
         return bundle.containsKey(number.toString())
     }
 
-    String fetchSingularUnitAsWord(Integer number) {
+    boolean hasSpecialCase(Integer number) {
+
+        ResourceBundle bundle = ResourceBundle.getBundle("com.mb.NumbersWithSpecialCase")
+        return bundle.containsKey(number.toString())
+    }
+
+    String fetchWordForSpecialCase(Integer number) {
+
+        ResourceBundle bundle = ResourceBundle.getBundle("com.mb.NumbersWithSpecialCase")
+        return bundle.getString(number.toString())
+    }
+
+    String fetchNumberAsSingularWord(Integer number) {
 
         ResourceBundle bundle = ResourceBundle.getBundle("com.mb.SingularUnitAsWord")
         return bundle.getString(number.toString())
@@ -56,6 +96,23 @@ class HumanNumberPrinter {
         ResourceBundle bundle = ResourceBundle.getBundle("com.mb.NumberQuantifierAsWord")
 
         return bundle.getString(number.toString())
+    }
+
+    String fetchTenthAsWord(Integer tenths) {
+
+        String word = digitAsWord(tenths)
+        String tenthPlural = getPluralForTenth(tenths)
+        return "${word}${tenthPlural}"
+    }
+
+    String getPluralForTenth(Integer tenths){
+
+        if(tenths==2)
+        {
+            return "nty"
+        }
+
+        return "ty"
     }
 
 

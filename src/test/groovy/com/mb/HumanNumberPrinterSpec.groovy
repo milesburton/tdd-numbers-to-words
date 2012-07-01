@@ -13,6 +13,46 @@ class HumanNumberPrinterSpec extends Specification {
     }
 
     @Unroll
+    def "special cases, #number should be printed as #expectedWords"(){
+
+        when:
+        String actualWords = humanNumberPrinter.toWords(number)
+
+        then:
+        actualWords == expectedWords
+
+        where:
+        number | expectedWords
+        0      | 'zero'
+        10     | 'ten'
+    }
+
+
+    @Unroll
+    def "even modulus of ten, #number should be printed as #expectedWords"(){
+
+        when:
+        String actualWords = humanNumberPrinter.toWords(number)
+
+        then:
+        actualWords == expectedWords
+
+        where:
+        number | expectedWords
+        0      | 'zero'
+        10     | 'ten'
+        20     | "twenty"
+        30     | "thirty"
+        40     | "fourty"
+        50     | "fifty"
+        60     | "sixty"
+        70     | "seventy"
+        80     | "eighty"
+        90     | "ninety"
+    }
+
+
+    @Unroll
     def "below ten, #number should be printed as #expectedWords"(){
 
         when:
@@ -36,7 +76,7 @@ class HumanNumberPrinterSpec extends Specification {
     }
 
     @Unroll
-    def "between ten & twelve, #number should be printed as #expectedWords"(){
+    def "can be describe as singular, #number should be printed as #expectedWords"(){
 
         when:
         String actualWords = humanNumberPrinter.toWords(number)
@@ -46,7 +86,6 @@ class HumanNumberPrinterSpec extends Specification {
 
         where:
         number | expectedWords
-        10      | 'ten'
         11      | 'eleven'
         12      | 'twelve'
     }
@@ -67,8 +106,33 @@ class HumanNumberPrinterSpec extends Specification {
         15      | 'fifteen'
         16      | 'sixteen'
         17      | 'seventeen'
-        18      | 'eightteen'
+        18      | 'eighteen'
         19      | 'nineteen'
     }
+
+    @Unroll
+    def "between twenty and thirty, #number should be printed as #expected words"(){
+
+        when:
+        String actualWords = humanNumberPrinter.toWords(number)
+
+        then:
+        actualWords == expectedWords
+
+        where:
+        number | expectedWords
+        20      | 'twenty'
+        21      | 'twentyone'
+        22      | 'twentytwo'
+        23      | 'twentythree'
+        24      | 'twentyfour'
+        25      | 'twentyfive'
+        26      | 'twentysix'
+        27      | 'twentyseven'
+        28      | 'twentyeight'
+        29      | 'twentynine'
+    }
+
+
 
 }
