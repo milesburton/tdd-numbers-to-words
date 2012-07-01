@@ -5,64 +5,83 @@ class HumanNumberPrinter {
 
     String toWords(Integer number) {
 
-        LinkedList<String> result = new LinkedList<String>()
-
         if(hasSpecialCase(number)){
             return fetchWordForSpecialCase(number);
         }
 
         int tenths = number > 0 ? (number/10) : 0
 
-        if(isAnEvenModulasOfTen(number)){
+        if(isAnEvenModulusOfTen(number)){
             return fetchTenthAsWord(tenths)
         }
 
-        if(isSpokenAsSingular(number)){
+        if(canBeSpokenAsSingular(number)){
            return fetchNumberAsSingularWord(number)
         }
 
 
         if(isBetween13AndLessThan20(number)){
 
-            String unit = fetchNumberQuantifierAsWord(tenths)
             int lsd = leastSignificantDigit(number)
 
-            String word
-            word = digitAsWord(lsd)
+            String numberAsString
+            if(hasPluralModifier(lsd))
+            {
+                numberAsString = fetchBeginningOfPluralModifier(lsd)
+            }else{
 
-            return "${word}${unit}"
+               numberAsString = fetchNumberAsSingularWord(lsd)
+            }
+
+            String pluralisation = fetchNumberQuantifierAsWord(tenths)
+
+            return "${numberAsString}${pluralisation}"
         }
 
+        if(number < 100){
+            int lsd = leastSignificantDigit(number)
+            String tenthsAsWord = fetchTenths(tenths)
+            String numberAsString = fetchNumberAsSingularWord(lsd)
+
+            return "${tenthsAsWord}${numberAsString}"
+
+        }
 
     }
+
+    private String fetchTenths(int tenths) {
+
+        String numberAsString
+        if (hasPluralModifier(tenths)) {
+            numberAsString = fetchBeginningOfPluralModifier(tenths)
+        } else {
+
+            numberAsString = fetchNumberAsSingularWord(tenths)
+        }
+
+        String pluralisation = fetchNumberQuantifierAsWord(tenths)
+
+        return "${numberAsString}${pluralisation}"
+    }
+
 
     private boolean isBetween13AndLessThan20(int number) {
         number >= 13 && number < 20
     }
 
-    boolean isSpokenAsSingular(Integer number) {
+    boolean canBeSpokenAsSingular(Integer number) {
 
         ResourceBundle bundle = ResourceBundle.getBundle("com.mb.SingularUnitAsWord")
         return bundle.containsKey(number.toString())
     }
 
-    private boolean isAnEvenModulasOfTen(int number) {
+    private boolean isAnEvenModulusOfTen(int number) {
         return number % 10 == 0
     }
 
-    private String digitAsWord(int lsd) {
-        String word
-        if (hasPlural(lsd)) {
-            word = fetchPluralUnitAsWord(lsd)
-        } else {
-            word = fetchNumberAsSingularWord(lsd)
-        }
-        word
-    }
+    boolean hasPluralModifier(int number){
 
-    boolean hasPlural(int number){
-
-        ResourceBundle bundle = ResourceBundle.getBundle("com.mb.PluralUnitAsWord")
+        ResourceBundle bundle = ResourceBundle.getBundle("com.mb.BeginningOfNumberPluralModifiers")
         return bundle.containsKey(number.toString())
     }
 
@@ -84,14 +103,13 @@ class HumanNumberPrinter {
         return bundle.getString(number.toString())
     }
 
-    String fetchPluralUnitAsWord(Integer number) {
+    String fetchBeginningOfPluralModifier(Integer number) {
 
-        ResourceBundle bundle = ResourceBundle.getBundle("com.mb.PluralUnitAsWord")
+        ResourceBundle bundle = ResourceBundle.getBundle("com.mb.BeginningOfNumberPluralModifiers")
         return bundle.getString(number.toString())
     }
 
     String fetchNumberQuantifierAsWord(Integer number) {
-
 
         ResourceBundle bundle = ResourceBundle.getBundle("com.mb.NumberQuantifierAsWord")
 
@@ -100,12 +118,25 @@ class HumanNumberPrinter {
 
     String fetchTenthAsWord(Integer tenths) {
 
-        String word = digitAsWord(tenths)
-        String tenthPlural = getPluralForTenth(tenths)
-        return "${word}${tenthPlural}"
+        String word
+        if(hasPluralModifier(tenths)){
+
+            String partialWord = fetchBeginningOfPluralModifier(tenths)
+            String pluralisation = fetchEndOfNumberPluralModifier(tenths)
+
+            word = "${partialWord}${pluralisation}"
+        }else{
+
+            String numberAsSingular = fetchNumberAsSingularWord(tenths)
+            String pluralisation = fetchEndOfNumberPluralModifier(tenths)
+            word = "${numberAsSingular}${pluralisation}"
+
+        }
+
+        return word
     }
 
-    String getPluralForTenth(Integer tenths){
+    String fetchEndOfNumberPluralModifier(Integer tenths){
 
         if(tenths==2)
         {
