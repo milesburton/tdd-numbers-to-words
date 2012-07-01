@@ -24,6 +24,7 @@ class HumanNumberPrinterSpec extends Specification {
         where:
         number | expectedWords
         1      | 'one'
+        2      | 'two'
     }
 
 
