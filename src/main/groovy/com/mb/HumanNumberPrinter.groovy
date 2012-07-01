@@ -11,19 +11,9 @@ class HumanNumberPrinter {
     String fetchWordForDigit(Integer number) {
 
 
-        String word
-        switch (number) {
-        case 1:
-        word = "one"
-        break;
-        case 2:
-        word = 'two'
-        break;
-        }
+        ResourceBundle bundle = ResourceBundle.getBundle("com.mb.NumberUnitAsWord")
 
-        return word
-
-
+        return bundle.getString(number.toString())
     }
 
 
