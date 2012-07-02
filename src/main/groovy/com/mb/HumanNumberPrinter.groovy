@@ -45,7 +45,6 @@ class HumanNumberPrinter {
 		if (number % lowerBound == 0) {
 			return toWords(multipliesOfLowerBound) + " " + NUMBER_TO_WORD.get(lowerBound)
 		} else {
-
 			return toWords(multipliesOfLowerBound * lowerBound) + " and " + toWords((int) number % lowerBound)
 		}
 

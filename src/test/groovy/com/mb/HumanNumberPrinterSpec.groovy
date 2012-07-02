@@ -12,6 +12,7 @@ class HumanNumberPrinterSpec extends Specification {
 
     void setup() {
         humanNumberPrinter = new HumanNumberPrinter()
+		humanNumberPrinter.hundredPrinter = Mock(HundredPrinter)
     }
 
 	def "toWords with exception"(){
@@ -23,58 +24,51 @@ class HumanNumberPrinterSpec extends Specification {
 		thrown UnsupportedNumberException
 	}
 
-    @Unroll
-    def "between one hundred and one hundred and ten,, #number should be printed as #expected words"() {
+    def "toWords 9"() {
 
         when:
-        String actualWords = humanNumberPrinter.toWords(number)
+        String actualWords = humanNumberPrinter.toWords(9)
 
         then:
-        actualWords == expectedWords
+        actualWords == "nine"
 
-        where:
-        number | expectedWords
-        100    | 'one hundred'
-        101    | 'one hundred and one'
-        102    | 'one hundred and two'
-        103    | 'one hundred and three'
-        104    | 'one hundred and four'
-        105    | 'one hundred and five'
-        106    | 'one hundred and six'
-        107    | 'one hundred and seven'
-        108    | 'one hundred and eight'
-        109    | 'one hundred and nine'
+		and:
+		(1) * humanNumberPrinter.hundredPrinter.toWords(9) >> "nine"
     }
 
-	@Unroll
-	def "thousands,, #number should be printed as #expected words"() {
+	def "toWords 101"() {
+
 		when:
-		String actualWords = humanNumberPrinter.toWords(number)
+		String actualWords = humanNumberPrinter.toWords(101)
 
 		then:
-		actualWords == expectedWords
+		actualWords == "one hundred and one"
 
-		where:
-		number | expectedWords
-		1000    | 'one thousand'
-		1001    | 'one thousand and one'
-		9000    | 'nine thousand'
-		9999    | 'nine thousand and nine hundred and ninetynine'
+		and:
+		(2) * humanNumberPrinter.hundredPrinter.toWords(1) >> "one"
 	}
 
-    @Unroll
-    def "between one thousand and one million, #number should be printed as #expected words"() {
+	def "toWords 1001"() {
 
-        when:
-        String actualWords = humanNumberPrinter.toWords(number)
+		when:
+		String actualWords = humanNumberPrinter.toWords(1001)
 
-        then:
-        actualWords == expectedWords
+		then:
+		actualWords == "one thousand and one"
 
-        where:
-        number      | expectedWords
-        999999      | 'nine hundred and ninetynine thousand and nine hundred and ninetynine'
-		888888      | 'eight hundred and eightyeight thousand and eight hundred and eightyeight'
-    }
+		and:
+		(2) * humanNumberPrinter.hundredPrinter.toWords(1) >> "one"
+	}
 
+	def "toWords 1000001"() {
+
+		when:
+		String actualWords = humanNumberPrinter.toWords(1000001)
+
+		then:
+		actualWords == "one million and one"
+
+		and:
+		(2) * humanNumberPrinter.hundredPrinter.toWords(1) >> "one"
+	}
 }
