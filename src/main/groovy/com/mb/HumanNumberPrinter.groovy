@@ -7,6 +7,7 @@ class HumanNumberPrinter {
     static final HUNDRED = 100
     static final THOUSAND = 1000
     static final MILLION = 1000000
+	static final BILLION = 1000000000
 
     String toWords(Integer number) {
 
@@ -32,8 +33,8 @@ class HumanNumberPrinter {
             }
         }
 
-        if (number >= THOUSAND && number < MILLION) {
 
+        if (number >= THOUSAND && number < MILLION) {
 
 
             int thousands = Math.floor(number / THOUSAND)
@@ -52,10 +53,26 @@ class HumanNumberPrinter {
             }
         }
 
+		if (number >= MILLION && number < BILLION) {
 
 
+			int thousands = Math.floor(number / MILLION)
 
+
+			if(number % MILLION==0)
+			{
+				if(thousands>TENS){
+					return toWords(thousands) +  " million"
+				}else{
+					return printMillion(thousands)
+				}
+			}else{
+
+				return toWords(thousands * MILLION) + " and " + toWords((int)number % MILLION)
+			}
+		}
     }
+
 
     private String printHundred(int hundreds) {
         return "${fetchNumberAsSingularWord(hundreds)} hundred"

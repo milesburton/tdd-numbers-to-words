@@ -245,9 +245,7 @@ class HumanNumberPrinterSpec extends Specification {
         where:
         number      | expectedWords
         999999      | 'nine hundred and ninetynine thousand and nine hundred and ninetynine'
+		888888      | 'eight hundred and eightyeight thousand and eight hundred and eightyeight'
     }
-
-
-
 
 }
