@@ -75,31 +75,31 @@ class HundredPrinter {
 
 	boolean isCompoundNumber(int number) {
 
-		ResourceBundle bundle = ResourceBundle.getBundle("com.mb.BeginningOfNumberPluralModifiers")
+		ResourceBundle bundle = ResourceBundle.getBundle("BeginningOfNumberPluralModifiers")
 		return bundle.containsKey(number.toString())
 	}
 
 	private boolean isSpecialCase(Integer number) {
 
-		ResourceBundle bundle = ResourceBundle.getBundle("com.mb.SingularUnitAsWord")
+		ResourceBundle bundle = ResourceBundle.getBundle("SingularUnitAsWord")
 		return bundle.containsKey(number.toString())
 	}
 
 	private String fetchRawNumberAsString(Integer number) {
 
-		ResourceBundle bundle = ResourceBundle.getBundle("com.mb.SingularUnitAsWord")
+		ResourceBundle bundle = ResourceBundle.getBundle("SingularUnitAsWord")
 		return bundle.getString(number.toString())
 	}
 
 	private String fetchCompoundNumberBeginning(Integer number) {
 
-		ResourceBundle bundle = ResourceBundle.getBundle("com.mb.BeginningOfNumberPluralModifiers")
+		ResourceBundle bundle = ResourceBundle.getBundle("BeginningOfNumberPluralModifiers")
 		return bundle.getString(number.toString())
 	}
 
 	private String fetchNumberQuantifierAsWord(Integer number) {
 
-		ResourceBundle bundle = ResourceBundle.getBundle("com.mb.NumberQuantifierAsWord")
+		ResourceBundle bundle = ResourceBundle.getBundle("NumberQuantifierAsWord")
 
 		if (bundle.containsKey(number.toString())) {
 			return bundle.getString(number.toString())
