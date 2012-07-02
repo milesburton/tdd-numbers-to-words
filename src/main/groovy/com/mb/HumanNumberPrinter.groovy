@@ -34,11 +34,11 @@ class HumanNumberPrinter {
 		throw new UnsupportedNumberException();
 	}
 
-	boolean isWithinBound(int lowerBound, int exclusiveUpperBound, int number) {
+	private boolean isWithinBound(int lowerBound, int exclusiveUpperBound, int number) {
 		number >= lowerBound && number < exclusiveUpperBound
 	}
 
-	String toWordWithinBoundary(int lowerBound, int exclusiveUpperBound, int number) {
+	private String toWordWithinBoundary(int lowerBound, int exclusiveUpperBound, int number) {
 
 		int multipliesOfLowerBound = Math.floor(number / lowerBound)
 
