@@ -3,34 +3,96 @@ package com.mb
 
 class HumanNumberPrinter {
 
+    static final TENS = 10
+    static final HUNDRED = 100
+    static final THOUSAND = 1000
+    static final MILLION = 1000000
+
     String toWords(Integer number) {
 
-        if(hasSpecialCase(number)){
+        if (hasSpecialCase(number)) {
             return fetchWordForSpecialCase(number);
         }
 
-        int tenths = number > 0 ? (number/10) : 0
+        if(number < HUNDRED)
+        {
+            return getWordForHundred(number)
+        }
 
-        if(isAnEvenModulusOfTen(number)){
+        if (number >= HUNDRED && number < THOUSAND) {
+
+            int hundreds = Math.floor(number / HUNDRED)
+
+            if(number % HUNDRED==0)
+            {
+                return printHundred(hundreds)
+            }else{
+
+                return toWords(hundreds*HUNDRED) + " and " + toWords((int)number % HUNDRED)
+            }
+        }
+
+        if (number >= THOUSAND && number < MILLION) {
+
+
+
+            int thousands = Math.floor(number / THOUSAND)
+
+
+            if(number % THOUSAND==0)
+            {
+				if(thousands>TENS){
+					return toWords(thousands) +  " thousand"
+				}else{
+					return printThousand(thousands)
+				}
+            }else{
+
+                return toWords(thousands * THOUSAND) + " and " + toWords((int)number % THOUSAND)
+            }
+        }
+
+
+
+
+    }
+
+    private String printHundred(int hundreds) {
+        return "${fetchNumberAsSingularWord(hundreds)} hundred"
+    }
+
+    private String printThousand(int thousands) {
+        return "${fetchNumberAsSingularWord(thousands)} thousand"
+    }
+
+    private String printMillion(int millions) {
+        return "${fetchNumberAsSingularWord(millions)} million"
+    }
+
+
+    private String getWordForHundred(Integer number) {
+
+        int tenths = calculateTenths(number)
+
+        if (isAnEvenModulusOfTen(number)) {
             return fetchTenthAsWord(tenths)
         }
 
-        if(canBeSpokenAsSingular(number)){
-           return fetchNumberAsSingularWord(number)
+        if (canBeSpokenAsSingular(number)) {
+            return fetchNumberAsSingularWord(number)
         }
 
 
-        if(isBetween13AndLessThan20(number)){
+        if (isBetween13AndLessThan20(number)) {
 
             int lsd = leastSignificantDigit(number)
 
             String numberAsString
-            if(hasPluralModifier(lsd))
-            {
+            if (hasPluralModifier(lsd)) {
                 numberAsString = fetchBeginningOfPluralModifier(lsd)
-            }else{
+            } else {
 
-               numberAsString = fetchNumberAsSingularWord(lsd)
+                numberAsString = fetchNumberAsSingularWord(lsd)
             }
 
             String pluralisation = fetchNumberQuantifierAsWord(tenths)
@@ -38,18 +100,22 @@ class HumanNumberPrinter {
             return "${numberAsString}${pluralisation}"
         }
 
-        if(number < 100){
+        if (number < 100) {
             int lsd = leastSignificantDigit(number)
-            String tenthsAsWord = fetchTenths(tenths)
+            String tenthsAsWord = fetchTenthsAsWord(tenths)
             String numberAsString = fetchNumberAsSingularWord(lsd)
 
             return "${tenthsAsWord}${numberAsString}"
-
         }
 
+        return ""
     }
 
-    private String fetchTenths(int tenths) {
+    private BigDecimal calculateTenths(int number) {
+        number / 10
+    }
+
+    private String fetchTenthsAsWord(int tenths) {
 
         String numberAsString
         if (hasPluralModifier(tenths)) {
@@ -79,7 +145,7 @@ class HumanNumberPrinter {
         return number % 10 == 0
     }
 
-    boolean hasPluralModifier(int number){
+    boolean hasPluralModifier(int number) {
 
         ResourceBundle bundle = ResourceBundle.getBundle("com.mb.BeginningOfNumberPluralModifiers")
         return bundle.containsKey(number.toString())
@@ -113,19 +179,24 @@ class HumanNumberPrinter {
 
         ResourceBundle bundle = ResourceBundle.getBundle("com.mb.NumberQuantifierAsWord")
 
-        return bundle.getString(number.toString())
+        if (bundle.containsKey(number.toString())) {
+            return bundle.getString(number.toString())
+        } else {
+            return bundle.getString('default')
+        }
+
     }
 
     String fetchTenthAsWord(Integer tenths) {
 
         String word
-        if(hasPluralModifier(tenths)){
+        if (hasPluralModifier(tenths)) {
 
             String partialWord = fetchBeginningOfPluralModifier(tenths)
             String pluralisation = fetchEndOfNumberPluralModifier(tenths)
 
             word = "${partialWord}${pluralisation}"
-        }else{
+        } else {
 
             String numberAsSingular = fetchNumberAsSingularWord(tenths)
             String pluralisation = fetchEndOfNumberPluralModifier(tenths)
@@ -136,10 +207,9 @@ class HumanNumberPrinter {
         return word
     }
 
-    String fetchEndOfNumberPluralModifier(Integer tenths){
+    String fetchEndOfNumberPluralModifier(Integer tenths) {
 
-        if(tenths==2)
-        {
+        if (tenths == 2) {
             return "nty"
         }
 
@@ -148,8 +218,8 @@ class HumanNumberPrinter {
 
 
 
-    private Integer leastSignificantDigit(int number){
-        if (number < 0 ) return ((-1) * number) % 10;
+    private Integer leastSignificantDigit(int number) {
+        if (number < 0) return ((-1) * number) % 10;
         else return number % 10;
     }
 }
