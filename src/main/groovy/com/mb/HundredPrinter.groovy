@@ -21,7 +21,8 @@ class HundredPrinter {
 		return numbersGreaterThan20AsWord(tenths, number)
 	}
 
-	private GString numbersGreaterThan20AsWord(int tenths, int number) {
+	private String numbersGreaterThan20AsWord(int tenths, int number) {
+
 		String beginningOfNumber = fetchBeginningOfNumber(tenths)
 		String pluralisation = fetchNumberQuantifierAsWord(tenths)
 
@@ -31,9 +32,9 @@ class HundredPrinter {
 
 	private String teenAsWord(int number, int tenths) {
 
-		int lsd = number % 10
+		int leastSignificantDigit = number % 10
 
-		String numberAsString = fetchBeginningOfNumber(lsd)
+		String numberAsString = fetchBeginningOfNumber(leastSignificantDigit)
 		String pluralisation = fetchNumberQuantifierAsWord(tenths)
 
 		return "${numberAsString}${pluralisation}"
@@ -42,6 +43,7 @@ class HundredPrinter {
 	private String fetchBeginningOfNumber(int digit) {
 
 		String numberAsString
+
 		if (isCompoundNumber(digit)) {
 
 			numberAsString = fetchCompoundNumberBeginning(digit)
@@ -49,27 +51,26 @@ class HundredPrinter {
 
 			numberAsString = fetchRawNumberAsString(digit)
 		}
-		numberAsString
+		return numberAsString
 	}
 
 	private String fetchTenthAsWord(Integer tenths) {
 
-		String word
+		String compoundWordBegin
+		String compoundWordEnd
+
 		if (isCompoundNumber(tenths)) {
 
-			String partialWord = fetchCompoundNumberBeginning(tenths)
-			String pluralisation = fetchNumberQuantifierAsWord(tenths)
+			compoundWordBegin = fetchCompoundNumberBeginning(tenths)
+			compoundWordEnd = fetchNumberQuantifierAsWord(tenths)
 
-			word = "${partialWord}${pluralisation}"
 		} else {
 
-			String numberAsSingular = fetchRawNumberAsString(tenths)
-			String pluralisation = fetchNumberQuantifierAsWord(tenths)
-			word = "${numberAsSingular}${pluralisation}"
-
+			compoundWordBegin = fetchRawNumberAsString(tenths)
+			compoundWordEnd = fetchNumberQuantifierAsWord(tenths)
 		}
 
-		return word
+		return "${compoundWordBegin}${compoundWordEnd}"
 	}
 
 	boolean isCompoundNumber(int number) {
