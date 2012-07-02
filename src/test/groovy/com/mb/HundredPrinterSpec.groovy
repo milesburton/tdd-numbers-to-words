@@ -34,7 +34,6 @@ class HundredPrinterSpec extends Specification {
 		90     | "ninety"
 	}
 
-
 	@Unroll
 	def "below ten, #number should be printed as #expectedWords"() {
 

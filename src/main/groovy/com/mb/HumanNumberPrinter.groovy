@@ -9,57 +9,47 @@ class HumanNumberPrinter {
 	static final THOUSAND = 1000
 	static final MILLION = 1000000
 	static final BILLION = 1000000000
+	static final Map NUMBER_TO_WORD = [(HUNDRED): 'hundred', (THOUSAND): 'thousand', (MILLION): "million"]
 
 	String toWords(Integer number) {
 
-		if (number < HUNDRED) {
+		if(isWithinBound(0, HUNDRED, number)){
 			return hundredPrinter.toWords(number)
 		}
 
-		if (number >= HUNDRED && number < THOUSAND) {
-
-			int hundreds = Math.floor(number / HUNDRED)
-
-			if (number % HUNDRED == 0) {
-				return toWords(hundreds) + " hundred"
-			} else {
-
-				return toWords(hundreds * HUNDRED) + " and " + toWords((int) number % HUNDRED)
-			}
+		if(isWithinBound(HUNDRED, THOUSAND, number)){
+			return toWordWithinBoundary(HUNDRED, THOUSAND, number)
 		}
 
-		if (number >= THOUSAND && number < MILLION) {
 
-			int thousands = Math.floor(number / THOUSAND)
-
-			if (number % THOUSAND == 0) {
-				return toWords(thousands) + " thousand"
-			} else {
-
-				return toWords(thousands * THOUSAND) + " and " + toWords((int) number % THOUSAND)
-			}
+		if(isWithinBound(THOUSAND, MILLION, number)){
+			return toWordWithinBoundary(THOUSAND, MILLION, number)
 		}
 
-		if (number >= MILLION && number < BILLION) {
 
-
-			int millions = Math.floor(number / MILLION)
-
-			if (number % MILLION == 0) {
-				return toWords(millions) + " million"
-			} else {
-
-				return toWords(millions * MILLION) + " and " + toWords((int) number % MILLION)
-			}
+		if(isWithinBound(MILLION, BILLION, number)){
+			return toWordWithinBoundary(MILLION, BILLION, number)
 		}
-
 
 		throw new UnsupportedNumberException();
-
 	}
 
+	boolean isWithinBound(int lowerBound, int exclusiveUpperBound, int number) {
+		number >= lowerBound && number < exclusiveUpperBound
+	}
 
+	String toWordWithinBoundary(int lowerBound, int exclusiveUpperBound, int number) {
 
+		int multipliesOfLowerBound = Math.floor(number / lowerBound)
+
+		if (number % lowerBound == 0) {
+			return toWords(multipliesOfLowerBound) + " " + NUMBER_TO_WORD.get(lowerBound)
+		} else {
+
+			return toWords(multipliesOfLowerBound * lowerBound) + " and " + toWords((int) number % lowerBound)
+		}
+
+	}
 
 
 }
