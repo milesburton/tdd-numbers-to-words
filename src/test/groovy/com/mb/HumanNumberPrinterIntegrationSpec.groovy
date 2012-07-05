@@ -13,7 +13,7 @@ class HumanNumberPrinterIntegrationSpec extends Specification {
     }
 
     @Unroll
-    def "between one hundred and one hundred and ten,, #number should be printed as #expected words"() {
+    def "between one hundred and one hundred and ten, [#number] should be printed as [#expectedWords]"() {
 
         when:
         String actualWords = humanNumberPrinter.toWords(number)
@@ -36,7 +36,7 @@ class HumanNumberPrinterIntegrationSpec extends Specification {
     }
 
 	@Unroll
-	def "thousands,, #number should be printed as #expected words"() {
+	def "thousands, [#number] should be printed as [#expectedWords]"() {
 		when:
 		String actualWords = humanNumberPrinter.toWords(number)
 
@@ -48,11 +48,11 @@ class HumanNumberPrinterIntegrationSpec extends Specification {
 		1000    | 'one thousand'
 		1001    | 'one thousand and one'
 		9000    | 'nine thousand'
-		9999    | 'nine thousand and nine hundred and ninetynine'
+		9999    | 'nine thousand nine hundred and ninety nine'
 	}
 
     @Unroll
-    def "between one thousand and one million, #number should be printed as #expected words"() {
+    def "between one thousand and one million, [#number] should be printed as [#expectedWords]"() {
 
         when:
         String actualWords = humanNumberPrinter.toWords(number)
@@ -62,8 +62,9 @@ class HumanNumberPrinterIntegrationSpec extends Specification {
 
         where:
         number      | expectedWords
-        999999      | 'nine hundred and ninetynine thousand and nine hundred and ninetynine'
-		888888      | 'eight hundred and eightyeight thousand and eight hundred and eightyeight'
+        999999      | 'nine hundred and ninety nine thousand nine hundred and ninety nine'
+		888888      | 'eight hundred and eighty eight thousand eight hundred and eighty eight'
+		56945781    | 'fifty six million nine hundred and forty five thousand seven hundred and eighty one'
     }
 
 }

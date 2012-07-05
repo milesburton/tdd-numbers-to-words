@@ -27,7 +27,7 @@ class HundredPrinter {
 		String pluralisation = fetchNumberQuantifierAsWord(tenths)
 
 
-		return "${beginningOfNumber}${pluralisation}${toWords(number % 10)}"
+		return "${beginningOfNumber}${pluralisation} ${toWords(number % 10)}"
 	}
 
 	private String teenAsWord(int number, int tenths) {

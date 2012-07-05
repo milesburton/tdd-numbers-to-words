@@ -12,7 +12,7 @@ class HundredPrinterSpec extends Specification {
 	}
 
 	@Unroll
-	def "even modulus of ten, #number should be printed as #expectedWords"() {
+	def "even modulus of ten, [#number] should be printed as [#expectedWords]"() {
 
 		when:
 		String actualWords = humanNumberPrinter.toWords(number)
@@ -35,7 +35,7 @@ class HundredPrinterSpec extends Specification {
 	}
 
 	@Unroll
-	def "below ten, #number should be printed as #expectedWords"() {
+	def "below ten, [#number] should be printed as [#expectedWords]"() {
 
 		when:
 		String actualWords = humanNumberPrinter.toWords(number)
@@ -58,7 +58,7 @@ class HundredPrinterSpec extends Specification {
 	}
 
 	@Unroll
-	def "can be describe as singular, #number should be printed as #expectedWords"() {
+	def "can be describe as singular, [#number] should be printed as [#expectedWords]"() {
 
 		when:
 		String actualWords = humanNumberPrinter.toWords(number)
@@ -73,7 +73,7 @@ class HundredPrinterSpec extends Specification {
 	}
 
 	@Unroll
-	def "between thirteen and nineteen, #number should be printed as #expected words"() {
+	def "between thirteen and nineteen, [#number] should be printed as [#expectedWords]"() {
 
 		when:
 		String actualWords = humanNumberPrinter.toWords(number)
@@ -93,7 +93,7 @@ class HundredPrinterSpec extends Specification {
 	}
 
 	@Unroll
-	def "between twenty and thirty, #number should be printed as #expected words"() {
+	def "between twenty and thirty, [#number] should be printed as [#expectedWords]"() {
 
 		when:
 		String actualWords = humanNumberPrinter.toWords(number)
@@ -104,19 +104,19 @@ class HundredPrinterSpec extends Specification {
 		where:
 		number | expectedWords
 		20     | 'twenty'
-		21     | 'twentyone'
-		22     | 'twentytwo'
-		23     | 'twentythree'
-		24     | 'twentyfour'
-		25     | 'twentyfive'
-		26     | 'twentysix'
-		27     | 'twentyseven'
-		28     | 'twentyeight'
-		29     | 'twentynine'
+		21     | 'twenty one'
+		22     | 'twenty two'
+		23     | 'twenty three'
+		24     | 'twenty four'
+		25     | 'twenty five'
+		26     | 'twenty six'
+		27     | 'twenty seven'
+		28     | 'twenty eight'
+		29     | 'twenty nine'
 	}
 
 	@Unroll
-	def "between thirty and forty, #number should be printed as #expected words"() {
+	def "between thirty and forty, [#number] should be printed as [#expectedWords]"() {
 
 		when:
 		String actualWords = humanNumberPrinter.toWords(number)
@@ -127,19 +127,19 @@ class HundredPrinterSpec extends Specification {
 		where:
 		number | expectedWords
 		30     | 'thirty'
-		31     | 'thirtyone'
-		32     | 'thirtytwo'
-		33     | 'thirtythree'
-		34     | 'thirtyfour'
-		35     | 'thirtyfive'
-		36     | 'thirtysix'
-		37     | 'thirtyseven'
-		38     | 'thirtyeight'
-		39     | 'thirtynine'
+		31     | 'thirty one'
+		32     | 'thirty two'
+		33     | 'thirty three'
+		34     | 'thirty four'
+		35     | 'thirty five'
+		36     | 'thirty six'
+		37     | 'thirty seven'
+		38     | 'thirty eight'
+		39     | 'thirty nine'
 	}
 
 	@Unroll
-	def "between forty and fifty, #number should be printed as #expected words"() {
+	def "between forty and fifty, [#number] should be printed as [#expectedWords]"() {
 
 		when:
 		String actualWords = humanNumberPrinter.toWords(number)
@@ -150,19 +150,19 @@ class HundredPrinterSpec extends Specification {
 		where:
 		number | expectedWords
 		40     | 'forty'
-		41     | 'fortyone'
-		42     | 'fortytwo'
-		43     | 'fortythree'
-		44     | 'fortyfour'
-		45     | 'fortyfive'
-		46     | 'fortysix'
-		47     | 'fortyseven'
-		48     | 'fortyeight'
-		49     | 'fortynine'
+		41     | 'forty one'
+		42     | 'forty two'
+		43     | 'forty three'
+		44     | 'forty four'
+		45     | 'forty five'
+		46     | 'forty six'
+		47     | 'forty seven'
+		48     | 'forty eight'
+		49     | 'forty nine'
 	}
 
 	@Unroll
-	def "oracle test, #number should be printed as #expected words"() {
+	def "oracle test, [#number] should be printed as [#expectedWords]"() {
 
 		when:
 		String actualWords = humanNumberPrinter.toWords(number)
@@ -172,7 +172,7 @@ class HundredPrinterSpec extends Specification {
 
 		where:
 		number | expectedWords
-		99     | 'ninetynine'
-		74     | 'seventyfour'
+		99     | 'ninety nine'
+		74     | 'seventy four'
 	}
 }
