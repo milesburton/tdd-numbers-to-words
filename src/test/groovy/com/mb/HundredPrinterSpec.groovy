@@ -26,7 +26,7 @@ class HundredPrinterSpec extends Specification {
 		10     | 'ten'
 		20     | "twenty"
 		30     | "thirty"
-		40     | "fourty"
+		40     | "forty"
 		50     | "fifty"
 		60     | "sixty"
 		70     | "seventy"
@@ -149,16 +149,16 @@ class HundredPrinterSpec extends Specification {
 
 		where:
 		number | expectedWords
-		40     | 'fourty'
-		41     | 'fourtyone'
-		42     | 'fourtytwo'
-		43     | 'fourtythree'
-		44     | 'fourtyfour'
-		45     | 'fourtyfive'
-		46     | 'fourtysix'
-		47     | 'fourtyseven'
-		48     | 'fourtyeight'
-		49     | 'fourtynine'
+		40     | 'forty'
+		41     | 'fortyone'
+		42     | 'fortytwo'
+		43     | 'fortythree'
+		44     | 'fortyfour'
+		45     | 'fortyfive'
+		46     | 'fortysix'
+		47     | 'fortyseven'
+		48     | 'fortyeight'
+		49     | 'fortynine'
 	}
 
 	@Unroll
